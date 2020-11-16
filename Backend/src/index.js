@@ -10,6 +10,7 @@ const userRoute = require("./routes/user");
 dotenv.config();
 
 // Connect to DB
+mongoose.set('useCreateIndex', true)
 mongoose.connect(process.env.DB_CONNECT, { useUnifiedTopology: true, useNewUrlParser: true }, () =>
     console.log("connected to db")
 );

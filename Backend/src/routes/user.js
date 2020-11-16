@@ -2,21 +2,10 @@ const router = require("express").Router();
 const User = require("../model/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { registerValidation } = require("../helpers/validation");
+const verify = require("../helpers/verifyToken");
 
 router.post("/register", async (req, res) => {
 
-    //Validate
-    const { error } = registerValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    // Cheking if the user is already in the database
-    const userExist = await User.findOne({ username: req.body.username });
-    if (userExist) return res.status(400).send('user already exists');
-
-    // Cheking if the email is already taken in the database
-    const emailExist = await User.findOne({ email: req.body.email });
-    if (emailExist) return res.status(400).send('email is  already exist');
 
     //Hash passwords
     const salt = await bcrypt.genSalt(10);
@@ -37,8 +26,59 @@ router.post("/register", async (req, res) => {
         const savedUser = await user.save();
         res.send({ savedUser })
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send(err.message);
     }
 });
+
+router.post("/login", async (req, res) => {
+    // Cheking if the email exists
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) return res.status(400).send("Username is not Found!");
+    //PASSWORD IS CORRECT
+    const validPass = await bcrypt.compare(req.body.password, user.password);
+    if (!validPass) return res.status(400).send("Invalid password!");
+
+    //Create and assign a token
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+    res.header("auth-token", token).send(token);
+
+});
+
+router.put("/update", verify, async (req, res) => {
+
+    const user = await User.findById(req.user._id);
+
+
+    if (req.body.email != undefined) {
+        user.email = req.body.email;
+    }
+
+    if (req.body.password != undefined) {
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(req.body.password, salt);
+        user.password = hashPassword;
+    }
+
+    if (req.body.firstname != undefined) {
+        user.firstname = req.body.firstname;
+    }
+
+    if (req.body.lastname != undefined) {
+        user.lastname = req.body.lastname;
+    }
+
+    user.modify_date = new Date().toISOString();
+
+
+    try {
+        const savedUser = await user.save();
+        res.send({ savedUser })
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+
+
+})
+
 
 module.exports = router;
