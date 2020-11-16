@@ -3,6 +3,9 @@ const app = express();
 const dotenv = require("dotenv");
 const mongoose = require('mongoose');
 
+// import Routes
+const userRoute = require("./routes/user");
+
 
 dotenv.config();
 
@@ -13,5 +16,6 @@ mongoose.connect(process.env.DB_CONNECT, { useUnifiedTopology: true, useNewUrlPa
 
 //Middleware
 app.use(express.json());
+app.use("/api/user", userRoute);
 
 app.listen(process.env.SERVER_PORT, () => console.log("Server Up and running in"));
