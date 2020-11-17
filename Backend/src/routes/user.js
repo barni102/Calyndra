@@ -45,25 +45,26 @@ router.post("/login", async (req, res) => {
 });
 
 router.put("/update", verify, async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(400).send("User is not Found!");
     if (Object.entries(req.body).length != 0) {
-        const user = await User.findById(req.user._id);
 
 
-        if (req.body.email != undefined) {
+        if (req.body.email !== undefined) {
             user.email = req.body.email;
         }
 
-        if (req.body.password != undefined) {
+        if (req.body.password !== undefined) {
             const salt = await bcrypt.genSalt(10);
             const hashPassword = await bcrypt.hash(req.body.password, salt);
             user.password = hashPassword;
         }
 
-        if (req.body.firstname != undefined) {
+        if (req.body.firstname !== undefined) {
             user.firstname = req.body.firstname;
         }
 
-        if (req.body.lastname != undefined) {
+        if (req.body.lastname !== undefined) {
             user.lastname = req.body.lastname;
         }
 
