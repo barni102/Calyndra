@@ -45,39 +45,51 @@ router.post("/login", async (req, res) => {
 });
 
 router.put("/update", verify, async (req, res) => {
+    if (Object.entries(req.body).length != 0) {
+        const user = await User.findById(req.user._id);
 
-    const user = await User.findById(req.user._id);
+
+        if (req.body.email != undefined) {
+            user.email = req.body.email;
+        }
+
+        if (req.body.password != undefined) {
+            const salt = await bcrypt.genSalt(10);
+            const hashPassword = await bcrypt.hash(req.body.password, salt);
+            user.password = hashPassword;
+        }
+
+        if (req.body.firstname != undefined) {
+            user.firstname = req.body.firstname;
+        }
+
+        if (req.body.lastname != undefined) {
+            user.lastname = req.body.lastname;
+        }
+
+        user.modify_date = new Date().toISOString();
 
 
-    if (req.body.email != undefined) {
-        user.email = req.body.email;
+        try {
+            const savedUser = await user.save();
+            res.send({ savedUser })
+        } catch (err) {
+            res.status(400).send(err.message);
+        }
+    } else {
+        res.send("Give at least one argument!");
     }
 
-    if (req.body.password != undefined) {
-        const salt = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(req.body.password, salt);
-        user.password = hashPassword;
-    }
 
-    if (req.body.firstname != undefined) {
-        user.firstname = req.body.firstname;
-    }
+});
 
-    if (req.body.lastname != undefined) {
-        user.lastname = req.body.lastname;
-    }
-
-    user.modify_date = new Date().toISOString();
-
-
+router.delete("/delete", verify, async (req, res) => {
     try {
-        const savedUser = await user.save();
-        res.send({ savedUser })
+        const deletedUser = await User.deleteOne({ _id: req.user._id })
+        res.send({ deletedUser });
     } catch (err) {
-        res.status(400).send(err.message);
+        res.send(err.message);
     }
-
-
 })
 
 
