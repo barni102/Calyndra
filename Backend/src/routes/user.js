@@ -19,7 +19,6 @@ router.post("/register", async (req, res) => {
         password: hashPassword,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        created_date: new Date().toISOString()
     })
 
     try {

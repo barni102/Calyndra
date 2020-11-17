@@ -29,6 +29,7 @@ const userSchema = new mongoose.Schema({
     },
     created_date: {
         type: Date,
+        default: Date.now()
     },
     modify_date: {
         type: Date
