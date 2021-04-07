@@ -33,7 +33,7 @@ jobs:
         env:
           TEST: ${{ secrets.TEST }}
         run: |
-          echo "$SUPER_SECRET"
+          echo "$TEST"
           
           
           
