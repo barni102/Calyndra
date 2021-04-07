@@ -9,6 +9,8 @@ on:
 
 jobs:
   test:
+    env:
+      key1: ${{secrets.TEST}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -30,8 +32,6 @@ jobs:
         run: |
           ls -l
       - name: bash
-        env:
-          key1: ${{secrets.TEST}}
         run: |
           echo $key1
           
