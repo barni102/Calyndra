@@ -23,5 +23,14 @@ jobs:
           do
             echo "Welcome $i times"
           done
+      - name: ls
+        run: |
+          node -v 
+          npm -v 
+          ls -l
+          cd 
+          ls -l
+          
+          
  
         
