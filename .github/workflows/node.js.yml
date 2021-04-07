@@ -30,10 +30,8 @@ jobs:
         run: |
           ls -l
       - name: bash
-        env:
-          SUPER_SECRET: ${{ secrets.TEST }}
         run: |
-          echo $SUPER_SECRET          
+          echo "${{ secrets.TEST }}  "       
           
           
           
