@@ -12,10 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install Dependencies with Apt Get
-        run: |
-          sudo apt update
-          sudo apt install nodejs npm
       - name: bash script
         run: |
           #!/bin/bash
@@ -37,7 +33,7 @@ jobs:
         env:
           SUPER_SECRET: ${{ secrets.TEST }}
         run: |
-          echo "$SUPER_SECRET"          
+          echo $SUPER_SECRET          
           
           
           
