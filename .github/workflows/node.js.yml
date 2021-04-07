@@ -31,7 +31,7 @@ jobs:
           ls -l
       - name: bash
         run: |
-          echo "${{ secrets.TEST }}  "       
+          echo ${{ secrets.TEST }}      
           
           
           
