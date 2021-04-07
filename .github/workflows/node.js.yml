@@ -30,6 +30,10 @@ jobs:
           ls -l
           cd 
           ls -l
+      - name: test location 
+        run: |
+          ls -l
+          
           
           
  
