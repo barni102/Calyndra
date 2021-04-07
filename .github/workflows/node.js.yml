@@ -5,7 +5,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main dev ]
 
 jobs:
   test:
@@ -33,6 +33,11 @@ jobs:
       - name: test location 
         run: |
           ls -l
+      - name: bash
+        env:
+          SUPER_SECRET: ${{ secrets.TEST }}
+        run: |
+          echo "$SUPER_SECRET"          
           
           
           
