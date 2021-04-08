@@ -19,8 +19,10 @@ jobs:
         env:
           TEST: ${{ secrets.DIR }}
         run: | 
-          cd "$TEST"
-          ls 
+          touch .env
+          echo API_ENDPOINT="https://xxx.execute-api.us-west-2.amazonaws.com" >> .env
+          echo API_KEY=${{ secrets.DIR }} >> .env
+          cat .env
         
           
  
