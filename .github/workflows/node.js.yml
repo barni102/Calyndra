@@ -21,7 +21,8 @@ jobs:
         env:
           TEST: ${{ secrets.DIR }}
         run: |
-          cd $TEST
+          a=$TEST
+          echo $a
           ls 
           sam --version
         
