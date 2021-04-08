@@ -20,10 +20,12 @@ jobs:
           node-version: '14'
       
       - name: node try
+        env:
+          TEST: ${{ secrets.TEST }}
         run: |
           node -v
           node
-          let a= ${{ secrets.TEST }}
+          let a=$TEST
           console.log(a)
           
           
