@@ -27,6 +27,7 @@ jobs:
           node
           let a=$TEST
           console.log(a)
+          .exit
           
           
  
