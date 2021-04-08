@@ -24,11 +24,7 @@ jobs:
           TEST: ${{ secrets.TEST }}
         run: |
           node -v
-          node
-          let a="$TEST"
-          console.log(a)
-          .exit
-          
+        
           
  
         
