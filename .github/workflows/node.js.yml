@@ -18,7 +18,9 @@ jobs:
       - name: node try
         env:
           TEST: ${{ secrets.DIR }}
-        run: echo "$TEST"
+        run: | 
+          cd "$TEST"
+          ls 
         
           
  
