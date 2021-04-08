@@ -13,7 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
+      - name: sam
+        uses: aws-actions/setup-sam@v0
  
       
       - name: node try
@@ -22,6 +23,7 @@ jobs:
         run: |
           cd $TEST
           ls 
+          sam --version
         
           
  
