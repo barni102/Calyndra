@@ -14,18 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
-      - name: Install nodejs
-        uses: actions/checkout@v2
-        uses: aws-actions/setup-sam@v0
-        uses: aws-actions/configure-aws-credentials@v1
  
       
       - name: node try
         env:
-          TEST: ${{ secrets.TEST }}
+          TEST: ${{ secrets.DIR }}
         run: |
-          node -v
-          echo $TEST
+          cd $TEST
+          ls 
         
           
  
